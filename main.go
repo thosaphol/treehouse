@@ -35,12 +35,10 @@ func main() {
 
 	for i := 1; i < rowLen-1; i++ {
 		columnLen := len(matrix[i])
+
+		//find max from start(left column)
 		maxStart := 0
-		//find max from left(start) column
 		for j := 1; j < columnLen-1; j++ {
-			if foundFlags[i][j] {
-				continue
-			}
 
 			currentTree := matrix[i][j]
 
@@ -49,25 +47,23 @@ func main() {
 				maxStart = treePrevius
 			}
 
-			if maxStart < currentTree {
+			if !foundFlags[i][j] && maxStart < currentTree {
 				treeCount++
 				foundFlags[i][j] = true
 			}
 		}
 
+		//find max from end(right column)
 		maxEnd := 0
-
 		for j := columnLen - 2; j > 0; j-- {
-			if foundFlags[i][j] {
-				continue
-			}
+
 			currentTree := matrix[i][j]
 			treeNext := matrix[i][j+1]
 			if treeNext > maxEnd {
 				maxEnd = treeNext
 			}
 
-			if maxEnd < currentTree {
+			if !foundFlags[i][j] && maxEnd < currentTree {
 				treeCount++
 				foundFlags[i][j] = true
 			}
@@ -77,7 +73,7 @@ func main() {
 	for i := 1; i < colLen-1; i++ {
 		rowLen = len(matrix)
 
-		//find max from start(left column or top row)
+		//find max from start(top row)
 		maxStart := 0
 		for j := 1; j < rowLen-1; j++ {
 
@@ -94,7 +90,7 @@ func main() {
 			}
 		}
 
-		//find max from end(right column or bottom row)
+		//find max from end(bottom row)
 		maxEnd := 0
 		for j := rowLen - 2; j > 0; j-- {
 
